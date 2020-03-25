@@ -13,10 +13,22 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.List;
+import java.util.concurrent.ExecutionException;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
+
 public class MainActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     public static adapterCustom adapter;
+    private String API_BASE = "https://restcountries.eu/";
+    private List<Pays> listPays;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        callApiRetrofit();
+        callApi();
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -37,10 +49,26 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    public void callApiRetrofit()
+    public void callApi()
     {
-        Retrofit
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(API_BASE)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        MyService service = retrofit.create(MyService.class);
+        Call<List<Pays>> listProducts = service.getProducts();
+        listProducts.enqueue(new Callback<List<Pays>>() {
+            @Override
+            public void onResponse(Call<List<Pays>> call, Response<List<Pays>>
+                    response) {
+                listPays.addAll(response.body());
+            }
+            @Override
+            public void onFailure(Call<List<Pays>> call, Throwable t) {
+            }
+        });
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
