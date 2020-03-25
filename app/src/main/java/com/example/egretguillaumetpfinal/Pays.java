@@ -3,35 +3,46 @@ package com.example.egretguillaumetpfinal;
 public class Pays
 {
     private int drapeau;
-    private String nom;
-    private String continent;
-    private String sousContinent;
-    private String capitale;
-    private int nbHabs;
+    private String name;
+    private String region;
+    private String subregion;
+    private String capital;
+    private int population;
 
+    public Pays(String name, String region, String subregion, String capital, int population)
+    {
+        this.name = name;
+        this.region = region;
+        this.subregion = subregion;
+        this.capital = capital;
+        this.population = population;
+    }
 
+    public void setDrapeau(int drapeau) {
+        this.drapeau = drapeau;
+    }
 
     public int getDrapeau() {
         return drapeau;
     }
 
-    public String getNom() {
-        return nom;
+    public String getName() {
+        return name;
     }
 
-    public String getContinent() {
-        return continent;
+    public String getRegion() {
+        return region;
     }
 
-    public String getSousContinent() {
-        return sousContinent;
+    public String getSubregion() {
+        return subregion;
     }
 
-    public String getCapitale() {
-        return capitale;
+    public String getCapital() {
+        return capital;
     }
 
-    public int getNbHabs() {
-        return nbHabs;
+    public int getPopulation() {
+        return population;
     }
 }
